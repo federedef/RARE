@@ -166,7 +166,7 @@ class RoleBased2Vec():
 
         print('Start training...')
         random.seed(616)
-        w2v = Word2Vec(sentences=sentenses, size=self.args.dimensions, window=self.window_size, iter=self.args.num_iters, sg=1,
+        w2v = Word2Vec(sentences=sentenses, vector_size=self.args.dimensions, window=self.window_size, epochs=self.args.num_iters, sg=1,
                        hs=1, min_count=0, workers=workers)
 
         # w2v.save(self.args.output + self.args.dataset +'RoleBased2Vec.model')

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """example of CRARE method"""
 
 from param_parser import parameter_parser
@@ -9,8 +10,15 @@ import pandas as pd
 import random
 
 def read_graph(graph_path, is_directed=False):
-    data = np.loadtxt(graph_path, dtype=int)
+    # with open(graph_path, "r") as f:
+    #     for i,line in enumerate(f):
+    #         if i > 0:
+    #             line = line.strip().split("\t")
+    #             edgelist1.append((line[0], line[1]))
 
+
+
+    data = np.loadtxt(graph_path, dtype=int)
     data = data.astype(int)
     edgelist1 = []  # 1 advice
 
@@ -40,12 +48,16 @@ def get_node_embedding(args,G,r,t,m):
 
 if __name__ == "__main__":
     #example
-    path = r'../data/Edgelist/brazil-airports.edgelist'  #
-    label_path = r'../data/Category/labels-brazil-airports.txt'
+    path = r'./data/Edgelist/ecoli_STRING_700'  #
+    label_path = r'./data/Category/formated_cls'
+    path = self.args.input
 
     args = parameter_parser()
     tab_printer(args)
     G = read_graph(path)
+    print(G)
     # node embedding
     X = get_node_embedding(args, G, r=4,t=0.25,m=1)
-    # print(X)
+    list_arrays=[X.get_vector(str(n)) for n in G.nodes()]
+    print(X)
+    # print(list_arrays)
