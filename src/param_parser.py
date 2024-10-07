@@ -134,5 +134,5 @@ def parameter_parser():
                         help="Motif compression factorization regularizer. Default is 0.01.")
 
 
-    return parser.parse_args(args=[])
+    return parser.parse_args()
 

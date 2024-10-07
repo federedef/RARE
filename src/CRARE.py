@@ -48,11 +48,12 @@ def get_node_embedding(args,G,r,t,m):
 
 if __name__ == "__main__":
     #example
-    path = r'./data/Edgelist/ecoli_STRING_700'  #
     label_path = r'./data/Category/formated_cls'
-    path = self.args.input
+    #path = self.args.input
 
     args = parameter_parser()
+    path = args.input #r'./data/Edgelist/ecoli_STRING_700'  #
+    print(path)
     tab_printer(args)
     G = read_graph(path)
     print(G)
