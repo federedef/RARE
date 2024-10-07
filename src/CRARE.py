@@ -46,6 +46,20 @@ def get_node_embedding(args,G,r,t,m):
     print('******************************embedding时间：{}***********************'.format(time.time() - start0))
     return w2v.wv
 
+def get_com_features(label_path):
+    com_features = {}
+    with open(label_path) as f:
+        for line in f:
+            line = line.strip().split("\t")
+            node = line[0]
+            comm = line[1]
+            if com_features.get(node):
+                com_features.append(comm)
+            else:
+                com_features[node] = [comm]
+    return com_features
+
+
 if __name__ == "__main__":
     #example
     label_path = r'./data/Category/formated_cls'

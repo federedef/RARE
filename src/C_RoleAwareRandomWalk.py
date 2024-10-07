@@ -38,7 +38,7 @@ class RoleBased2Vec():
     """
     multi_RoleBased2Vec model class.
     """
-    def __init__(self, args,G, r, t, m,num_walks, walk_length, window_size): #
+    def __init__(self, args,G, r, t, m,num_walks, walk_length, window_size, community_features): # Adding custom community features
 
         self.args = args
         self.G = G
@@ -49,6 +49,7 @@ class RoleBased2Vec():
         self.num_walks = num_walks
         self.walk_length = walk_length
         self.window_size = window_size
+        self.community_features = community_features # Adding custom community features
         # self.d = d
 
     def create_graph_structural_features(self,graph):
@@ -135,7 +136,7 @@ class RoleBased2Vec():
         from tqdm import tqdm
         self.structura_features = self.create_graph_structural_features(self.G)
         self.roles_nodes = get_roles_nodes(self.structura_features)
-        self.community_features = self.get_graph_community(self.G)  # {node: community}
+        self.community_features = self.  #self.get_graph_community(self.G)  # {node: community}
         self.community_nodes = get_community_nodes(self.community_features)  # {community: [nodes]}
 
         sts = []
