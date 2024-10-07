@@ -71,12 +71,17 @@ def get_community_nodes(data):
     #     roles_nodes = {role: [] for role in set(data.values())}
     # else:
     ###string 方式
-    value_list = set([i for i in data.values()])
+    value_list = set()
+    #value_list = set([i for i in v for v in data.values()])
+    for v in data.values():
+        for i in v:
+            value_list.add(i)
+
     c_nodes = {role: [] for role in value_list}
 
     for role in value_list:
         for node in data:
-            if data[node] == role:
+            if role in data[node]:
                 c_nodes[role].append(int(node))
     return c_nodes
 

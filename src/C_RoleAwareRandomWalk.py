@@ -92,7 +92,11 @@ class RoleBased2Vec():
     def walk_step(self,v):
         nbs = list(self.G.neighbors(v))
         role_list = self.roles_nodes[self.structura_features[str(v)][0]]
-        c_list = self.community_nodes[self.community_features[v]]
+        # c_list = self.community_nodes[self.community_features[v]]
+
+        c_list = []
+        for comm in self.community_features[v]:
+            c_list.extend(self.community_nodes[comm])
 
         all_nbs = nbs+ role_list +c_list
 

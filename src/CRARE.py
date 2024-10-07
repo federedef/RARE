@@ -51,10 +51,10 @@ def get_com_features(label_path):
     with open(label_path) as f:
         for line in f:
             line = line.strip().split(" ")
-            node = line[0]
-            comm = line[1]
+            node = int(line[0])
+            comm = int(line[1])
             if com_features.get(node):
-                com_features.append(comm)
+                com_features[node].append(comm)
             else:
                 com_features[node] = [comm]
     return com_features
