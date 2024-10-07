@@ -49,8 +49,7 @@ def get_node_embedding(args,G,r,t,m, community_features):
 def get_com_features(label_path):
     com_features = {}
     with open(label_path) as f:
-        for i, line in enumerate(f):
-            if i == 0: continue
+        for line in f:
             line = line.strip().split(" ")
             node = int(line[0])
             comm = int(line[1])
