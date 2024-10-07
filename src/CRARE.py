@@ -72,7 +72,11 @@ if __name__ == "__main__":
     G = read_graph(path)
     print(G)
     # node embedding
-    X = get_node_embedding(args, G, r=4,t=0.25,m=1, community_features=get_com_features(args.labels))
+    X = get_node_embedding(args, G, r=args.r,t=args.t,m=args.m, community_features=get_com_features(args.labels))
     list_arrays=[X.get_vector(str(n)) for n in G.nodes()]
+    #print(str(n) for n in G.nodes())
+    embedding_matrix = np.array(list_arrays)
+    np.save("embedding_matrix", embedding_matrix)
     print(X)
+    print([str(n) for n in G.nodes()])
     # print(list_arrays)

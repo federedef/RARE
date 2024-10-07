@@ -27,6 +27,26 @@ def parameter_parser():
 
     parser.add_argument('--dataset', nargs='?', default='brazil-test/',
                         help='Input graph path ')
+    ## Exact parameters
+
+    parser.add_argument("-m",
+                    nargs="?",
+                    default=1.0,
+                    type=float,
+                    help="weigth for community jump")
+
+    parser.add_argument("-r",
+                    nargs="?",
+                    default=0.25,
+                    type=float,
+                    help="weigth for neigh jump")
+
+    parser.add_argument("-t",
+                    nargs="?",
+                    default=4.0,
+                    type=float,
+                    help="weigth for role jump")
+
     ##后面自己加的
     parser.add_argument("--output-rolelist",
                         nargs="?",

@@ -94,23 +94,28 @@ class RoleBased2Vec():
         role_list = self.roles_nodes[self.structura_features[str(v)][0]]
         # c_list = self.community_nodes[self.community_features[v]]
 
-        c_list = []
-        for comm in self.community_features[v]:
-            c_list.extend(self.community_nodes[comm])
-
-        all_nbs = nbs+ role_list +c_list
+        if self.community_features.get(v):
+            c_list = []
+            for comm in self.community_features[v]:
+                c_list.extend(self.community_nodes[comm])
+            weight_3 = [1]*len(c_list)
+            for i,x in enumerate(c_list):
+                weight_3[i] = self.m
+            all_nbs = nbs+ role_list +c_list
+        else: 
+            all_nbs = nbs+ role_list
 
         weight_1 = [1]*len(nbs)
         weight_2 = [1]*len(role_list)
-        weight_3 = [1]*len(c_list)
         for i,x in enumerate(nbs):
-            weight_1[i] = 1/self.r
+            weight_1[i] = self.r
         for i,x in enumerate(role_list):
-            weight_2[i] = 1/self.t
-        for i,x in enumerate(c_list):
-            weight_3[i] = 1/self.m
+            weight_2[i] = self.t
 
-        weights = weight_1+weight_2 + weight_3
+        if self.community_features.get(v):
+            weights = weight_1+weight_2 + weight_3
+        else:
+            weights = weight_1+weight_2
 
         return random.choices(all_nbs, weights=weights, k=1)[0]
 
