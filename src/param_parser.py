@@ -12,8 +12,13 @@ def parameter_parser():
 
     parser.add_argument("--input",
                         nargs="?",
-                        default=r"../data/",
+                        default=r"../data/Edgelist",
                         help="Input graph path -- edge list edges.")
+
+    parser.add_argument("--labels",
+                        nargs="?",
+                        default=r"../data/Category",
+                        help="custom labels for a community")
 
     parser.add_argument("--output",
                         nargs="?",

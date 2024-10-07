@@ -36,11 +36,11 @@ def read_graph(graph_path, is_directed=False):
 
     return G1
 
-def get_node_embedding(args,G,r,t,m):
+def get_node_embedding(args,G,r,t,m, community_features):
     import time
     start0 = time.time()
     print('get embedding time:')
-    model = RoleBased2Vec(args, G, r,t,m, num_walks=10, walk_length=80, window_size=10)
+    model = RoleBased2Vec(args, G, r,t,m, community_features, num_walks=10, walk_length=80, window_size=10)
     # w2v = model.create_embedding()
     w2v = model.train(workers=4)
     print('******************************embedding时间：{}***********************'.format(time.time() - start0))
@@ -50,7 +50,7 @@ def get_com_features(label_path):
     com_features = {}
     with open(label_path) as f:
         for line in f:
-            line = line.strip().split("\t")
+            line = line.strip().split(" ")
             node = line[0]
             comm = line[1]
             if com_features.get(node):
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     G = read_graph(path)
     print(G)
     # node embedding
-    X = get_node_embedding(args, G, r=4,t=0.25,m=1)
+    X = get_node_embedding(args, G, r=4,t=0.25,m=1, community_features=get_com_features(args.labels))
     list_arrays=[X.get_vector(str(n)) for n in G.nodes()]
     print(X)
     # print(list_arrays)
