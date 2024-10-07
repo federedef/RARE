@@ -91,6 +91,9 @@ class RoleBased2Vec():
 
     def walk_step(self,v):
         nbs = list(self.G.neighbors(v))
+        print("the node is", v)
+        print("the neighs are:", nbs)
+        print("the node is", v)
         role_list = self.roles_nodes[self.structura_features[str(v)][0]]
         # c_list = self.community_nodes[self.community_features[v]]
 
@@ -113,11 +116,15 @@ class RoleBased2Vec():
             weight_2[i] = self.t
 
         if self.community_features.get(v):
-            weights = weight_1+weight_2 + weight_3
+            weights = weight_1+weight_2+weight_3
         else:
             weights = weight_1+weight_2
 
-        return random.choices(all_nbs, weights=weights, k=1)[0]
+        print("the weights are", weights)
+        next_node = None
+        if sum(weights) != 0:
+            random.choices(all_nbs, weights=weights, k=1)[0]
+        return next_node
 
     def random_walk(self):
         # random walk with every node as start point
