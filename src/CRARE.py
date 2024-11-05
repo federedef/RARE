@@ -40,7 +40,7 @@ def get_node_embedding(args,G,r,t,m, community_features):
     import time
     start0 = time.time()
     print('get embedding time:')
-    model = RoleBased2Vec(args, G, r,t,m, community_features, num_walks=10, walk_length=80, window_size=10)
+    model = RoleBased2Vec(args, G, r,t,m, community_features, num_walks=10, walk_length=100, window_size=10)
     # w2v = model.create_embedding()
     w2v = model.train(workers=4)
     print('******************************embedding时间：{}***********************'.format(time.time() - start0))
@@ -62,7 +62,7 @@ def get_com_features(label_path):
 
 if __name__ == "__main__":
     #example
-    label_path = r'./data/Category/formated_cls'
+    #label_path = r'./data/Category/formated_cls'
     #path = self.args.input
 
     args = parameter_parser()
@@ -72,11 +72,16 @@ if __name__ == "__main__":
     G = read_graph(path)
     print(G)
     # node embedding
-    X = get_node_embedding(args, G, r=args.r,t=args.t,m=args.m, community_features=get_com_features(args.labels))
+    if args.labels:
+        community_features=get_com_features(args.labels)
+    else:
+        community_features=None
+    X = get_node_embedding(args, G, r=args.r,t=args.t,m=args.m, community_features=community_features)
+    print(X)
     list_arrays=[X.get_vector(str(n)) for n in G.nodes()]
-    #print(str(n) for n in G.nodes())
     embedding_matrix = np.array(list_arrays)
     np.save("embedding_matrix", embedding_matrix)
-    print(X)
-    print([str(n) for n in G.nodes()])
-    # print(list_arrays)
+    nodes = [str(n) for n in G.nodes()]
+    with open("embedding_matrix.lst","w") as f:
+        for node in nodes:
+            f.write(node + "\n")

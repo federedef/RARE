@@ -78,7 +78,6 @@ def get_community_nodes(data):
             value_list.add(i)
 
     c_nodes = {role: [] for role in value_list}
-
     for role in value_list:
         for node in data:
             if role in data[node]:

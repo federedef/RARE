@@ -123,7 +123,7 @@ class RoleBased2Vec():
         print("the weights are", weights)
         next_node = None
         if sum(weights) != 0:
-            random.choices(all_nbs, weights=weights, k=1)[0]
+            next_node = random.choices(all_nbs, weights=weights, k=1)[0]
         return next_node
 
     def random_walk(self):
@@ -152,7 +152,9 @@ class RoleBased2Vec():
         from tqdm import tqdm
         self.structura_features = self.create_graph_structural_features(self.G)
         self.roles_nodes = get_roles_nodes(self.structura_features)
-        # self.community_features = self.get_graph_community(self.G)  # {node: community}
+        if not self.community_features:
+            self.community_features = self.get_graph_community(self.G)  # {node: community}
+            self.community_features = {node: [community] for node, community in self.community_features.items()}
         self.community_nodes = get_community_nodes(self.community_features)  # {community: [nodes]}
 
         sts = []
@@ -174,15 +176,16 @@ class RoleBased2Vec():
     def train(self, workers=4):
 
         print('Random walk to get training data...')
+        #random.seed(283)
         sentenses = self.sentenses()
-        self.save_walks(sentenses)
+        #self.save_walks(sentenses)
         print('Number of sentenses to train: ', len(sentenses))
 
         # with open(self.args.output + self.args.dataset+'walk_RoleBased2vec.txt', 'w') as f:
         #     f.write(str(sentenses))
 
         print('Start training...')
-        random.seed(616)
+        #random.seed(616)
         w2v = Word2Vec(sentences=sentenses, vector_size=self.args.dimensions, window=self.window_size, epochs=self.args.num_iters, sg=1,
                        hs=1, min_count=0, workers=workers)
 
